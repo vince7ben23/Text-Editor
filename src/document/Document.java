@@ -5,6 +5,7 @@ package document;
  * @author UC San Diego Intermediate Programming MOOC team
  */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,12 +63,50 @@ public abstract class Document {
 	 *       is not considered a syllable unless the word has no other syllables. 
 	 *       You should consider y a vowel.
 	 */
+	
 	protected int countSyllables(String word)
 	{
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 2) and 
 	    // EfficientDocument (module 3).
-	    return 0;
+		word = word.toLowerCase();
+		List<String> vowels = Arrays.asList("a", "e", "i", "o", "u", "y");
+		List<String> syllableList = new ArrayList<String>();
+		StringBuilder curSyllable = new StringBuilder();
+		char curCh = 0;
+		
+		for (int i=0; i<word.length(); i++) {
+			curCh = word.charAt(i);
+			String chString = Character.toString(curCh);
+			if (vowels.contains(chString)) {
+				curSyllable.append(curCh);
+			}
+			else {
+				if (curSyllable.length() > 0) {
+					syllableList.add(curSyllable.toString());
+					curSyllable.setLength(0);
+				}
+			}
+			
+			if (i == word.length()-1) {
+				if (curSyllable.length() > 0) {
+					syllableList.add(curSyllable.toString());
+					curSyllable.setLength(0);
+				}
+			}
+		}
+		
+		int syllableCount = syllableList.size();
+		String lastSyllable = syllableList.get(syllableList.size() - 1);
+		
+		// deal with the exception of the "lone e" case,
+		// a lone "e" at the end of a word is not considered a syllable unless no syllable.
+		if (syllableCount>1 && lastSyllable.equals("e") && curCh=='e') {
+			syllableCount--;
+		}
+		
+		// System.out.println("syllableList: " + syllableList +", syllableCount: " + syllableCount);	
+		return syllableCount;
 	}
 	
 	/** A method for testing
@@ -132,7 +171,8 @@ public abstract class Document {
 	{
 	    // TODO: You will play with this method in week 1, and 
 		// then implement it in week 2
-	    return text.length();
+		double fleshScore = 206.835 - 1.015 * ((double)getNumWords()/(double)getNumSentences()) - 84.6 * ((double)getNumSyllables()/(double)getNumWords());
+	    return fleshScore;
 	}
 	
 	
