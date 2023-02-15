@@ -4,7 +4,8 @@ import java.util.List;
 
 /** 
  * A naive implementation of the Document abstract class. 
- * @author UC San Diego Intermediate Programming MOOC team
+ * @author Cheng-Ying Chen
+ * Date 2023/02/12
  */
 public class BasicDocument extends Document 
 {
@@ -36,7 +37,8 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
-	    return 0;
+		List<String> words = getTokens("[A-Za-z]+");
+	    return words.size();
 	}
 	
 	/**
@@ -56,7 +58,8 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
-        return 0;
+		List<String> sentences = getTokens("[^.!?]+");
+        return sentences.size();
 	}
 	
 	/**
@@ -81,7 +84,14 @@ public class BasicDocument extends Document
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+		List<String> words = getTokens("[A-Za-z]+");
+		int totalCount = 0;
+		for (String word : words) {
+			// System.out.println("\nword: " + word);
+			int count = countSyllables(word);
+			totalCount += count;
+		}
+        return totalCount;
 	}
 	
 	
