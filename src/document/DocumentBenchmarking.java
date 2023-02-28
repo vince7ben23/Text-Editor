@@ -3,6 +3,7 @@ package document;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.lang.Math;
 
 /** A class for timing the EfficientDocument and BasicDocument classes
  * 
@@ -24,7 +25,7 @@ public class DocumentBenchmarking {
 		
 	    // The amount of characters to increment each step
 	    // You can play around with this
-		int increment = 20000;
+		int increment = 50000;
 
 		// The number of steps to run.  
 		// You can play around with this.
@@ -37,6 +38,7 @@ public class DocumentBenchmarking {
 		// TODO: Fill in the rest of this method so that it runs two loops
 		// and prints out timing results as described in the assignment 
 		// instructions and following the pseudocode below.
+		System.out.print("NumberOfChars" + "\t" + "BasicTime" + "\t" + "EfficientTime\n");
 		for (int numToCheck = start; numToCheck < numSteps*increment + start; 
 				numToCheck += increment)
 		{
@@ -57,11 +59,32 @@ public class DocumentBenchmarking {
 			 *     b. Calls fleshScore on this document
 			 * 6. Print out the time it took to complete the loop in step 5 
 			 *      (on the same line as the first print statement) followed by a newline (\n) 
-			 */  
-			 
+			 */ 
+			
+			System.out.print(numToCheck + "\t\t");
+			String text = getStringFromFile(textfile, numToCheck);
+			
+			long startTime = System.nanoTime();
+			for (int i=0; i<trials; i++) {
+				BasicDocument basicDoc = new BasicDocument(text);
+				basicDoc.getFleschScore();
+			}
+			long endTime = System.nanoTime();
+			double elapsedTime = (double) ((endTime - startTime)/Math.pow(10, 9));
+			System.out.print(elapsedTime + "\t");
+			
+			startTime = System.nanoTime();
+			for (int i=0; i<trials; i++) {
+				EfficientDocument effDoc = new EfficientDocument(text);
+				effDoc.getFleschScore();
+			}
+			endTime = System.nanoTime();
+			elapsedTime = (double) ((endTime - startTime)/Math.pow(10, 9));
+			System.out.print(elapsedTime + "\t\n");
 		}
 	
 	}
+	
 	
 	/** Get a specified number of characters from a text file
 	 * 

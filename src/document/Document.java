@@ -21,6 +21,7 @@ public abstract class Document {
 	protected Document(String text)
 	{
 		this.text = text;
+		// System.out.print(text);
 	}
 	
 	/** Returns the tokens that match the regex pattern from the document 
@@ -97,6 +98,10 @@ public abstract class Document {
 		}
 		
 		int syllableCount = syllableList.size();
+		if (syllableCount == 0) {
+			return 0;
+		}
+		
 		String lastSyllable = syllableList.get(syllableList.size() - 1);
 		
 		// deal with the exception of the "lone e" case,
