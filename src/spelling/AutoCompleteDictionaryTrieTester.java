@@ -89,6 +89,8 @@ public class AutoCompleteDictionaryTrieTester {
 	public void testAddWord()
 	{
 		
+		assertEquals("Asserting Benson is added successfully", true, emptyDict.addWord("Benson"));
+		assertEquals("Asserting Benson is deplicated and fail to be added", false, emptyDict.addWord("Benson"));
 		
 		assertEquals("Asserting hellow is not in empty dict", false, emptyDict.isWord("hellow"));
 		assertEquals("Asserting hellow is not in small dict", false, smallDict.isWord("hellow"));
