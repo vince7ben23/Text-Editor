@@ -18,10 +18,44 @@ This project is to implement a text editor through several classic data structur
 
 ### Spelling Suggestion
 - This is an advanced feature built on top of Spelling Check. It does not just indicate the wrong spelling. It gives you the correct words as suggestions that are close to your typing.
-- TBD
+- "edit distance" is defined as how close one string is to another. For example, "me" to "my" is one unit of edit distance since one character is substituted. There are three ways to manipulate characters on a string, substitution, insertion, and removal. With edit distance and character manipulation, we can design an algorithm to find the correct words and give suggestions based on a given string, and it can be described below,
+
+```
+  Input:  this given string for which to provide number of spelling suggestions
+  Input:  number of maximum suggestions to provide
+  Output: list of spelling suggestions
+
+  Create a queue to hold strings to explore
+  Create a visited set to avoid looking at the same string repeatedly
+  Create list of valid words to return when finished
+  Create a string, curr, to use in while loop
+
+  Add the initial string to the queue and visited set
+
+  while the queue has elements and we need more suggestions
+    remove the string from the start of the queue and assign to curr
+    get a list of neighbors (strings one mutation away from curr)
+    for each n in the list of neighbors
+       if n is not visited set
+         add n to the visited set
+         add n to the back of the queue
+         if n is a valid word in the dictionary
+            add n to the list of words to return
+
+  return the list of valid words
+```
 
 ## Prerequisites
-- TBD
+- Java 1.8 JDK
+- Install and setup your IDE, Eclipse version 2022-12 is used and tested.
+- Install e(fx)clipse, a GUI package used as frontend for this application, Link: www.eclipse.org/efxclipse/install.html.
+
 
 ## Setup
-- TBD
+- `git clone` this project to your local computer, and import it into Eclipse workspace.
+- Setting up the correct JDK for your project. Go to "Window"->"Preferences", select "Java"->"Installed JREs" to select JDK 1.8.0.
+- Add JUnit to your project. Select "Java Build Path". Select the "Libraries" tab and "Add Library". Select JUnit, then JUnit 4.
+
+## Acknowledgements
+- A big thank you to Tomas Mikula for creating RichTextFX which was used as the text area in the GUI application. Link: https://github.com/TomasMikula/RichTextFX
+
